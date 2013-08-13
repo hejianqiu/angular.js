@@ -31,11 +31,12 @@ module.exports = function(grunt) {
           stream: true
         },
         tasks: [
+          util.parallelTask('test:docgen'),
           util.parallelTask('tests:docs'),
           util.parallelTask('tests:modules'),
           util.parallelTask('tests:jquery'),
           util.parallelTask('tests:jqlite'),
-          util.parallelTask('tests:end2end')
+          util.parallelTask('test:e2e')
         ]
       }
     },
@@ -244,4 +245,5 @@ module.exports = function(grunt) {
   grunt.registerTask('package', ['bower','clean', 'buildall', 'minall', 'collect-errors', 'docs', 'copy', 'write', 'compress']);
   grunt.registerTask('ci-checks', ['ddescribe-iit', 'merge-conflict']);
   grunt.registerTask('default', ['package']);
+  grunt.registerTask('travis', ['test:docgen', 'tests:docs', 'tests:modules', 'tests:jquery', 'tests:jqlite', 'test:e2e']);
 };
